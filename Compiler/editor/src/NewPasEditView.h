@@ -1,0 +1,57 @@
+/*
+ * Copyright (c) 2012 Valentin Galea
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+#pragma once
+
+
+#include <ScintillaDocView.h>
+
+
+class CNewPasEditView : public CScintillaView
+{
+protected: // create from serialization only
+	/* constructor */	CNewPasEditView();
+	DECLARE_DYNCREATE(CNewPasEditView)
+	DECLARE_MESSAGE_MAP()
+
+public:
+	virtual				~CNewPasEditView();
+	CNewPasEditDoc*		GetDocument() const;
+	virtual BOOL		PreCreateWindow(CREATESTRUCT& cs);
+
+#ifdef _DEBUG
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
+#endif
+
+	virtual void		OnInitialUpdate();
+	void				SetAStyle(int style, COLORREF fore, COLORREF back=RGB(0xff, 0xff, 0xff), int size=-1, const char *face=0);
+	void				DefineMarker(int marker, int markerType, COLORREF fore, COLORREF back);
+};
+
+
+#ifndef _DEBUG  // debug version in NewPasEditView.cpp
+inline CNewPasEditDoc* CNewPasEditView::GetDocument() const
+{
+	return reinterpret_cast<CNewPasEditDoc*>(m_pDocument);
+}
+#endif
